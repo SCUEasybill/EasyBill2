@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="xyz.anmai.easybill.MoreActivity"
+    tools:showIn="@layout/activity_more">
+
+    <custom.view.StickyLayout
+        android:id="@+id/more_activity_sticky_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/more_activity_sticky_header"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="#78A524"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/more_activity_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/qq_min" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/more_activity_sticky_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <custom.view.PinnedHeaderExpandableListView
+                android:id="@+id/more_activity_expandablelist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@null"
+                android:childDivider="@drawable/child_bg"
+                android:childIndicatorLeft="0dp"
+                android:divider="@color/grey"
+                android:dividerHeight="1dp"
+                android:groupIndicator="@null"
+                android:scrollbarAlwaysDrawHorizontalTrack="false" >
+            </custom.view.PinnedHeaderExpandableListView>
+        </LinearLayout>
+    </custom.view.StickyLayout>
+
+</RelativeLayout>

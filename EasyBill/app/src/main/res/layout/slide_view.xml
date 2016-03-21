@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/view_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/holder"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+        <TextView
+            style="@style/account_text_view_button"
+            android:background="@drawable/yellow"
+            android:id="@+id/modify_account_button"
+            android:text="修改"/>
+        <TextView
+            style="@style/account_text_view_button"
+            android:background="@drawable/red"
+            android:id="@+id/delete_account_button"
+            android:text="删除"/>
+    </LinearLayout>
+</merge>

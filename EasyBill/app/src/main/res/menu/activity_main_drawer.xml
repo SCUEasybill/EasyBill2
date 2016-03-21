@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:checkable="false"
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="账户" />
+        <item
+            android:checkable="false"
+            android:id="@+id/nav_category"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="分类" />
+        <item
+            android:checkable="false"
+            android:id="@+id/nav_more"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="更多" />
+        <item
+            android:checkable="false"
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="设置" />
+    </group>
+
+    <item android:title="鼓励我们">
+        <menu>
+            <item
+                android:checkable="false"
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="分享" />
+            <item
+                android:checkable="false"
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="发送" />
+        </menu>
+    </item>
+
+</menu>

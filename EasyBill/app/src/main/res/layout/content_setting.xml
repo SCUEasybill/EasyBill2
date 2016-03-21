@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/window_bg"
+    tools:context="xyz.anmai.easybill.SettingActivity"
+    tools:showIn="@layout/activity_setting">
+
+    <!-- 没有指定圆形ImageView属性时，默认没有外边圆颜色 --> 
+        <!-- 需要将图片资源自定为src ，或在程序中setImageResource(res) 不能设置background为图片，这样不能达到圆形效果-->
+    <!-- border_outside_color 外部圆圈的颜色 --> 
+        <!-- border_inside_color 内部部圆圈的颜色 --> 
+        <!-- border_thickness 外圆和内圆的宽度 --> 
+    <custom.view.RoundImageView
+        android:id="@+id/setting_activity_head_portrait"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/cate_gift"
+        app:border_inside_color="#bc0978"
+        app:border_outside_color="#ba3456"
+        app:border_thickness="1dp" />
+
+    <View
+        android:id="@+id/straight_line_1"
+        style="@style/straight_line"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/setting_activity_head_portrait"/>
+
+    <LinearLayout
+        android:layout_below="@id/straight_line_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollbarThumbVertical="@drawable/scrollbar_handle_vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 个人信息 -->
+                <LinearLayout style="@style/lebal_bg_layout">
+
+                    <LinearLayout style="@style/lebal_bg_single_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="个人信息"
+                            android:textColor="#ff333333"
+                            android:id="@+id/tv_userInfo"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--  第二排设置 -->
+                <LinearLayout style="@style/lebal_bg_layout">
+                    <!--  导出数据 	-->
+                    <LinearLayout style="@style/lebal_bg_top_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="导出数据"
+                            android:textColor="#ff333333"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.0px"
+                        android:background="@drawable/lebal_shape_line" />
+
+                    <!-- 自动同步 -->
+                    <LinearLayout style="@style/lebal_bg_mid_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="自动同步"
+                            android:textColor="#ff333333"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.0px"
+                        android:background="@drawable/lebal_shape_line" />
+
+                    <!-- 更多 -->
+                    <LinearLayout style="@style/lebal_bg_bottom_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="更多"
+                            android:textColor="#ff333333"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--  第三排设置 -->
+                <LinearLayout style="@style/lebal_bg_layout">
+                    <!--  反馈 	-->
+                    <LinearLayout style="@style/lebal_bg_top_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="反馈"
+                            android:textColor="#ff333333"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.0px"
+                        android:background="@drawable/lebal_shape_line" />
+
+                    <!--  评价 	-->
+                    <LinearLayout style="@style/lebal_bg_bottom_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12.0dip"
+                            android:layout_weight="1.0"
+                            android:text="好评"
+                            android:textColor="#ff333333"
+                            android:textSize="16.0dip" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12.0dip"
+                            android:src="@drawable/setting_arrow" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

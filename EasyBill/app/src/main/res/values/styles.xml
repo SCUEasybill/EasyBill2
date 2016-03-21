@@ -1,0 +1,143 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="tab_host">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:background">@drawable/tabhost_background</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="straight_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:background">#FF909090</item>
+    </style>
+
+    <style name="category_text_view">
+        <item name="android:textSize">30sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="account_text_view_button">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- 这是主fragment中分类图标的样式 -->
+    <style name="fragment_main_imageview">
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- 这是主fragment中包含分类图标的linearlayout的样式 -->
+    <style name="fragment_main_linearlayout_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 设置界面的每一项设置的样式-->
+    <style name="lebal_bg_layout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/lebal_shape_bg</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8.0dip</item>
+        <item name="android:layout_marginTop">10.0dip</item>
+        <item name="android:layout_marginRight">8.0dip</item>
+    </style>
+
+    <!-- 设置界面单行显示的效果-->
+    <style name="lebal_bg_single_layout" parent="@style/lebal_bg_base_layout">
+        <item name="android:background">@drawable/lebal_bg_single_selector</item>
+    </style>
+    <!-- 设置界面 上 显示的效果-->
+    <style name="lebal_bg_top_layout" parent="@style/lebal_bg_base_layout">
+        <item name="android:background">@drawable/lebal_bg_top_selector</item>
+    </style>
+    <!-- 设置界面 中 显示的效果-->
+    <style name="lebal_bg_mid_layout" parent="@style/lebal_bg_base_layout">
+        <item name="android:background">@drawable/lebal_bg_mid_selector</item>
+    </style>
+    <!-- 设置界面 下 显示的效果-->
+    <style name="lebal_bg_bottom_layout" parent="@style/lebal_bg_base_layout">
+        <item name="android:background">@drawable/lebal_bg_bottom_selector</item>
+    </style>
+
+    <style name="lebal_bg_base_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">16.0dip</item>
+        <item name="android:paddingBottom">16.0dip</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+    <!--登陆注册标题样式-->
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">#6afb75</item>
+    </style>
+    <style name="style_title" parent="AppTheme.NoActionBar">
+        <!--<item name="android:windowTitleSize">50dp</item>-->
+        <!--<item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>-->
+    </style>
+    <!--登陆注册标题样式-->
+
+    <!-- 选择照片底部弹出层 -->
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+    <!-- 选择照片底部弹出层 -->
+
+
+    <!--<style name="TitleBarBackground">-->
+        <!--<item name="android:background">@drawable/bg_title_bar</item>-->
+    <!--</style>-->
+
+    <!--<style name="MyCustomTheme" parent="android:Theme">-->
+        <!--<item name="android:windowTitleBackgroundStyle">@style/TitleBarBackground</item>-->
+        <!--<item name="android:windowTitleSize">47dp</item>-->
+    <!--</style>-->
+</resources>

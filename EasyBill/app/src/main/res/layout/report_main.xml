@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <!--<com.scu.easybill.report.SegmentControlView-->
+        <!--android:id="@+id/SegmentControlView"-->
+        <!--android:layout_width="240dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/seg_linear"-->
+        <!--android:padding="0.5dp"></com.scu.easybill.report.SegmentControlView>-->
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragmentlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="110dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_below="@+id/SegmentControlView">-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="New Button"-->
+            <!--android:id="@+id/button" />-->
+    <!--</FrameLayout>-->
+    <RadioGroup
+        android:id="@+id/rg_tab_report"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radiobutton_line"
+            style="@style/tab_host"
+            android:drawableTop="@drawable/details_selector"
+            android:text="折线图" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_pie"
+            style="@style/tab_host"
+            android:drawableTop="@drawable/main_selector"
+            android:text="饼图" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frameLayout_report_main"></FrameLayout>
+</LinearLayout>

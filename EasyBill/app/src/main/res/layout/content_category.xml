@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="xyz.anmai.easybill.CategoryActivity"
+    tools:showIn="@layout/activity_category">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已添加分类"
+        android:id="@+id/mctv_1"
+        android:layout_alignParentTop="true" />
+
+    <View
+        style="@style/straight_line"
+        android:layout_below="@+id/mctv_1"
+        android:id="@+id/straight_line_4" />
+
+    <TableLayout
+        android:id="@+id/category_tablelayout"
+        android:layout_below="@id/straight_line_4"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/cate_00"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_01"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_02"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_03"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+        </TableRow>
+        <TableRow
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/cate_10"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                style="@style/category_text_view" />
+            <TextView
+                style="@style/category_text_view" />
+            <TextView
+                android:id="@+id/cate_13"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+        </TableRow>
+        <TableRow
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/cate_20"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                style="@style/category_text_view" />
+            <TextView
+                style="@style/category_text_view" />
+            <TextView
+                android:id="@+id/cate_23"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+        </TableRow>
+        <TableRow
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/cate_30"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_31"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_32"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+            <TextView
+                android:id="@+id/cate_33"
+                style="@style/category_text_view"
+                android:drawableTop="@drawable/qq_min"
+                android:text="1111"/>
+        </TableRow>
+    </TableLayout>
+
+    <View
+        style="@style/straight_line"
+        android:layout_height="0.5dip"
+        android:layout_below="@+id/category_tablelayout"
+        android:id="@+id/straight_line_5" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="未添加分类"
+        android:id="@+id/mctv_2"
+        android:layout_below="@id/straight_line_5"/>
+    <View
+        style="@style/straight_line"
+        android:layout_below="@+id/mctv_2"
+        android:id="@+id/straight_line_6" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/category_recyclerview_horizontal"
+        android:layout_below="@+id/straight_line_6"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

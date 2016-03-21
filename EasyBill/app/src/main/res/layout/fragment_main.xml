@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainFragment">
+
+    <LinearLayout
+        android:id="@+id/middle_main"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            style="@style/fragment_main_linearlayout_container"
+            android:id="@+id/main_line1">
+
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_1"
+                android:src="@drawable/cate_book" />
+
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_2"
+                android:src="@drawable/cate_clothes" />
+
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_3"
+                android:src="@drawable/cate_commodity" />
+
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_4"
+                android:src="@drawable/cate_communication" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/fragment_main_linearlayout_container"
+            android:id="@+id/main_line2"
+            android:baselineAligned="false">
+            <LinearLayout
+                android:layout_weight="1.5"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    style="@style/fragment_main_imageview"
+                    android:id="@+id/main_item_5"
+                    android:src="@drawable/cate_food" />
+                <ImageView
+                    style="@style/fragment_main_imageview"
+                    android:id="@+id/main_item_6"
+                    android:src="@drawable/cate_gift" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/spread_pie_chart"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1.5"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    style="@style/fragment_main_imageview"
+                    android:id="@+id/main_item_7"
+                    android:src="@drawable/cate_health" />
+                <ImageView
+                    style="@style/fragment_main_imageview"
+                    android:id="@+id/main_item_8"
+                    android:src="@drawable/cate_milk" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/fragment_main_linearlayout_container"
+            android:id="@+id/main_line3" >
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_9"
+                android:src="@drawable/cate_play" />
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_10"
+                android:src="@drawable/cate_recreation" />
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_11"
+                android:src="@drawable/cate_sport" />
+            <ImageView
+                style="@style/fragment_main_imageview"
+                android:id="@+id/main_item_12"
+                android:src="@drawable/cate_shopping" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_main"
+        android:layout_below="@+id/middle_main"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            style="@style/fragment_main_linearlayout_container"
+            android:orientation="vertical">
+            <Button
+                android:text="语音"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:id="@+id/voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/fragment_main_linearlayout_container" >
+            <ImageView
+                android:id="@+id/sub_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_button" />
+            <ImageView
+                android:id="@+id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_button" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
