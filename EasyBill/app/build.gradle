@@ -17,9 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //    添加讯飞语音的时候添加
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['libs']
+            }
+        }
 }
-repositories{
-    flatDir{
+repositories {
+    flatDir {
         dirs 'libs'
     }
 }

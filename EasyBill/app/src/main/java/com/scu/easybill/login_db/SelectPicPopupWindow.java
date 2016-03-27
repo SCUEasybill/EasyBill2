@@ -1,7 +1,6 @@
 package com.scu.easybill.login_db;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +35,8 @@ public class SelectPicPopupWindow extends PopupWindow {
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);//设置窗体可点击
         this.setAnimationStyle(R.style.PopupAnimation);//弹出对话框的动画
-        ColorDrawable dw = new ColorDrawable(0x80000000);//实例化一个ColorDrawable，半透明
-        this.setBackgroundDrawable(dw);//设置弹出的窗体背景
+//        ColorDrawable dw = new ColorDrawable(0x80000000);//实例化一个ColorDrawable，半透明
+//        this.setBackgroundDrawable(dw);//设置弹出的窗体背景
         //获取监听，如果触屏位置在框体外面，销毁弹出框
         mMenuView.setOnTouchListener(new View.OnTouchListener() {
             @Override

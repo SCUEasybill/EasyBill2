@@ -3,6 +3,7 @@ package xyz.anmai.easybill;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -23,9 +24,9 @@ import android.widget.Toast;
 
 import com.scu.easybill.login_db.Login;
 import com.scu.easybill.login_db.UserInfo;
+import com.scu.easybill.login_db.UserUtils;
 import com.scu.easybill.login_db.Users;
 import com.scu.easybill.report.ReportMain;
-import com.scu.easybill.login_db.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +47,17 @@ public class MainActivity extends BaseActivity
     Users user;
     String isLogin = null;
     ImageView imageView_header; // 侧滑头像
-
+    public static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);//加载主布局
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this.getApplicationContext();
         getAppState();//初始化APP，得到登录状态
+        init();
+        userStore();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,7 +72,6 @@ public class MainActivity extends BaseActivity
         imageView_header = (ImageView) headerView.findViewById(R.id.imv_header_main);
         //如果还没有登录过，显示默认头像，登录过，则更新头像
         imageView_header.setImageResource(R.drawable.header);
-
         Drawable drawable = UserUtils.updatePortrait();//        更新头像信息
         if (drawable != null) {
             imageView_header.setImageDrawable(drawable);
@@ -137,6 +140,22 @@ public class MainActivity extends BaseActivity
         transaction.commitAllowingStateLoss();
     }
 
+    //获取界面中的组件
+    private void init() {
+
+    }
+    //初始化在本地用户信息
+    private void userStore() {
+        SharedPreferences sp = getSharedPreferences("userInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("userId", "");
+        editor.putString("userName", "");
+        editor.putString("userPhone", "");
+        editor.putString("userEmail", "");
+        editor.putInt("userTotalMoney", 0);
+        editor.putString("isLogin", LOGIN);
+        editor.commit();
+    }
     //初始化activity，从本地文件中取出数据
     private void getAppState() {
         user = new Users();
