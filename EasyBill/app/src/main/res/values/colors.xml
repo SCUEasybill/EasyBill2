@@ -17,6 +17,15 @@
     <color name="button_unselected">#ff54acea</color>
     <color name="button_selected">#ff419de4</color>
 
-    <color name="blue">#0079FF</color> <!-- 蓝色 -->
+
+    <!--color name="blue">#0079FF</color> < 蓝色 -->
     <color name="green">#00FF00</color><!-- 绿色 -->
+
+
+
+    <color name="calendar_top_bg">#F5A0B3</color>
+    <color name="common_title">#F9F9F9</color>
+    <color name="blue">#499BF7</color>
+    <color name="whites">#ffffff</color>
+
 </resources>

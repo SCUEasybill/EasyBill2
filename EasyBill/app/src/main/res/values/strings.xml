@@ -68,6 +68,11 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_more">更多</string>
+    <string name="title_activity_change_account">添加账户</string>
+
+    <string name="account_spinner_add_prompt">请选择</string>
+    <string name="cate_spinner_attribute_prompt">请选择属性</string>
+    <string name="cate_spinner_ico_prompt">请选择图标</string>
 
     <string name="report_main">图表</string>
     <string name="noti_msg">通知消息</string>

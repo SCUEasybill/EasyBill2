@@ -3,38 +3,33 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/more_selector_item"
+    android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:descendantFocusability="blocksDescendants"
-    android:padding="5dp" >
+    android:padding="5dp">
 
     <TextView
-        android:id="@+id/more_child_name"
+        android:id="@+id/more_child_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
+
     <TextView
-        android:id="@+id/more_child_age"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-     <TextView
-        android:id="@+id/more_child_address"
+        android:id="@+id/more_child_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
-     <ImageView
-        android:id="@+id/more_child_image"
+
+    <TextView
+        android:id="@+id/more_child_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/collapse"
-        android:visibility="gone" />
-     <Button
-         android:id="@+id/more_child_button1"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:layout_weight="1"
-         android:text="Button" />
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/more_child_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </LinearLayout>

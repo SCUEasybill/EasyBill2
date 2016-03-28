@@ -49,11 +49,11 @@ public class ListViewCompat extends ListView {
                 int x = (int) event.getX();
                 int y = (int) event.getY();
                 int position = pointToPosition(x, y);
-                Log.e(TAG, "postion=" + position);
+//                Log.e(TAG, "postion=" + position);
                 if (position != INVALID_POSITION) {
                     AccountActivity.AccountItem data = (AccountActivity.AccountItem) getItemAtPosition(position);
                     mFocusedItemView = data.slideView;
-                    Log.e(TAG, "FocusedItemView=" + mFocusedItemView);
+//                    Log.e(TAG, "FocusedItemView=" + mFocusedItemView);
                 }
             }
             default:

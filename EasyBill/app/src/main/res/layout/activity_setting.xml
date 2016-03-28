@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/setting_layout"
+
     tools:context="xyz.anmai.easybill.SettingActivity">
 
     <android.support.design.widget.AppBarLayout

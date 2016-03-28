@@ -1,7 +1,5 @@
 package custom.view;
 
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import android.content.Context;
@@ -15,37 +13,38 @@ import android.widget.TextView;
 import xyz.anmai.easybill.R;
 
 public class GalleryAdapter extends
-        RecyclerView.Adapter<GalleryAdapter.ViewHolder>
-{
+        RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     /**
      * ItemClick的回调接口
-     * @author anmai
      */
-    public interface OnItemClickLitener
-    {
+    public interface OnItemClickLitener {
         void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
     }
 
+    //item点击监听器
     private OnItemClickLitener mOnItemClickLitener;
 
-    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
-    {
+    //设置点击监听器
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
+    //布局对象
     private LayoutInflater mInflater;
+    //数据集
     private TreeMap<Integer, String> mDatas;
 
-    public GalleryAdapter(Context context, TreeMap<Integer, String> datats)
-    {
+    //构造函数
+    public GalleryAdapter(Context context, TreeMap<Integer, String> datats) {
         mInflater = LayoutInflater.from(context);
         mDatas = datats;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
-        public ViewHolder(View arg0)
-        {
+    //自定义viewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(View arg0) {
             super(arg0);
         }
 
@@ -54,8 +53,7 @@ public class GalleryAdapter extends
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mDatas.size();
     }
 
@@ -63,8 +61,7 @@ public class GalleryAdapter extends
      * 创建ViewHolder
      */
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.category_recyclerview_item,
                 viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -77,26 +74,28 @@ public class GalleryAdapter extends
     }
 
     /**
-     * 设置值
+     * 设置viewHolder的值
      */
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int i)
-    {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         viewHolder.mImg.setImageResource((int) mDatas.keySet().toArray()[i]);
-        viewHolder.mTxt.setText((String)mDatas.values().toArray()[i]);
+        viewHolder.mTxt.setText((String) mDatas.values().toArray()[i]);
 
         //如果设置了回调，则设置点击事件
-        if (mOnItemClickLitener != null)
-        {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
-            {
+        if (mOnItemClickLitener != null) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     mOnItemClickLitener.onItemClick(viewHolder.itemView, i);
                 }
             });
-
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickLitener.onItemLongClick(viewHolder.itemView, i);
+                    return true;
+                }
+            });
         }
     }
 

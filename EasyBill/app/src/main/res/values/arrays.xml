@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="account_all_cate">
+        <item>支付宝</item>
+        <item>建行卡</item>
+        <item>工行卡</item>
+        <item>VISA</item>
+    </string-array>
+</resources>

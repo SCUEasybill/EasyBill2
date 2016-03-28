@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,12 +27,11 @@ import com.scu.easybill.login_db.Login;
 import com.scu.easybill.login_db.UserInfo;
 import com.scu.easybill.login_db.UserUtils;
 import com.scu.easybill.login_db.Users;
-import com.scu.easybill.report.ReportMain;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import custom.view.BaseActivity;
+import util.DBManager;
 
 import static com.scu.easybill.utils.ConstantsUtil.LOGIN;
 import static com.scu.easybill.utils.ConstantsUtil.NOLOGIN;
@@ -39,8 +39,10 @@ import static com.scu.easybill.utils.ConstantsUtil.NOLOGIN;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
+
     private FragmentManager fragmentManager;
-    private List<Fragment> fragments = new ArrayList<Fragment>();//缓存fragment
+    private FragmentTransaction transaction = null;
+    private List<Fragment> fragments = new ArrayList<>();
     private MainFragment mainFragment = null;
     private DetailsFragment detailsFragment = null;
     private ReportFragment reportFragment = null;
@@ -48,6 +50,8 @@ public class MainActivity extends BaseActivity
     String isLogin = null;
     ImageView imageView_header; // 侧滑头像
     public static Context context;
+    private DBManager dbManager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,6 @@ public class MainActivity extends BaseActivity
         context = this.getApplicationContext();
         getAppState();//初始化APP，得到登录状态
         init();
-        userStore();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,8 +69,7 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //nav-header-main,侧滑头像
+//nav-header-main,侧滑头像
         View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         imageView_header = (ImageView) headerView.findViewById(R.id.imv_header_main);
         //如果还没有登录过，显示默认头像，登录过，则更新头像
@@ -93,13 +95,32 @@ public class MainActivity extends BaseActivity
                 }
             }
         });
+        dbManager = new DBManager(this);
+        if (dbManager.db != null) {
+            Log.e(TAG, "连接数据库成功！");
+            Cursor c = null;
+            try {
+                c = dbManager.db.rawQuery("select * from user", null);
+                if (c.moveToNext()) {
+                    Log.e(TAG, "当前登陆用户id：" + c.getInt(c.getColumnIndex("id")));
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            } finally {
+                if (c != null) {
+                    c.close();
+                }
+            }
+        }else {
+            Log.e(TAG, "连接数据库失败");
+        }
 
         mainFragment = new MainFragment();
         detailsFragment = new DetailsFragment();
         reportFragment = new ReportFragment();
-        fragments.add(mainFragment);
         fragments.add(detailsFragment);
-        fragments.add(reportFragment);/**/
+        fragments.add(mainFragment);
+        fragments.add(reportFragment);
 
         fragmentManager = getFragmentManager();
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rg_tab);
@@ -110,52 +131,39 @@ public class MainActivity extends BaseActivity
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                Log.e("Main","checkedid="+checkedId);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 switch (checkedId) {
                     case R.id.radiobutton_main:
                         mainRadioButton.setChecked(true);
-                        transaction.show(mainFragment).hide(detailsFragment).hide(reportFragment);
+                        switchFragment(1);
                         break;
                     case R.id.radiobutton_details:
                         detailsRadioButton.setChecked(true);
-                        transaction.show(detailsFragment).hide(mainFragment).hide(reportFragment);
+                        switchFragment(0);
                         break;
                     case R.id.radiobutton_report:
                         reportRadioButton.setChecked(true);
-                        transaction.show(reportFragment).hide(detailsFragment).hide(mainFragment);
+                        switchFragment(2);
                         break;
                 }
-                transaction.commit();
             }
         });
         if (!mainRadioButton.isChecked()) {
             mainRadioButton.setChecked(true);
         }
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.main_content, mainFragment);
-        transaction.add(R.id.main_content, detailsFragment);
-        transaction.add(R.id.main_content, reportFragment);
+        transaction = fragmentManager.beginTransaction();
+        if (transaction.isEmpty()) {
+            for (Fragment fragment : fragments) {
+                transaction.add(R.id.main_content, fragment);
+            }
+        }
         transaction.show(mainFragment).hide(detailsFragment).hide(reportFragment);
         transaction.commitAllowingStateLoss();
     }
-
     //获取界面中的组件
     private void init() {
 
     }
-    //初始化在本地用户信息
-    private void userStore() {
-        SharedPreferences sp = getSharedPreferences("userInfo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("userId", "");
-        editor.putString("userName", "");
-        editor.putString("userPhone", "");
-        editor.putString("userEmail", "");
-        editor.putInt("userTotalMoney", 0);
-        editor.putString("isLogin", LOGIN);
-        editor.commit();
-    }
+
     //初始化activity，从本地文件中取出数据
     private void getAppState() {
         user = new Users();
@@ -210,7 +218,6 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -225,18 +232,44 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_setting) {
             SettingActivity.activityStart(this);
         } else if (id == R.id.nav_share) {
-            Toast.makeText(this, "感谢您点击分享！", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, Login.class);
-            startActivity(intent);
+            Log.e(TAG, "感谢您点击分享！");
         } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "感谢您点击发送！", Toast.LENGTH_SHORT).show();
-            ReportMain.activityStart(this);
-        } else if (id == R.id.imv_header_main) {
-            Toast.makeText(getApplicationContext(), "头像点击", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "感谢您点击发送！");
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        //关闭菜单
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    /**
+     * 更改Fragment对象
+     * @param index
+     */
+    private void switchFragment(int index) {
+        transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        for (int i = 0; i < fragments.size(); i++) {
+            if (index == i) {
+                transaction.show(fragments.get(index));
+            } else {
+                transaction.hide(fragments.get(i));
+            }
+        }
+        transaction.commit();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        //销毁活动时关闭数据库连接
+        if (dbManager.db != null) {
+            dbManager.close();
+            Log.e(TAG, "数据库连接已关闭！");
+        }
+    }
+
+    @Override
+    public void onStart(){
+       super.onStart();
     }
 }

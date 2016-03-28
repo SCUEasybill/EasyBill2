@@ -1,22 +1,25 @@
 package com.scu.easybill.login_db;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scu.easybill.utils.Zhengzebiaoda;
-import com.scu.easybill.utils.getNetworkState;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -31,7 +34,7 @@ import static com.scu.easybill.utils.ConstantsUtil.REGISTER;
 /**
  * Created by guyu on 2016/3/1.
  */
-public class FindPasswordPh_Em extends AppCompatActivity {
+public class FindPasswordPh_Em extends Activity{
 
     //传入的参数 action 表示传入的是注册还是修改密码，action_type表示是手机还是邮箱
     String action = null;
@@ -40,13 +43,13 @@ public class FindPasswordPh_Em extends AppCompatActivity {
     String action_type = null;
     EditText edtPhoneNum, edtYanzhengma;
     Button btnNext;
-    TextView tvGetYanzhengma;
+    Button tvGetYanzhengma;
     ProgressDialog ps;
     String ph_emNum, yanzhengma;
     private boolean ready;
     int yanzhengVerify = 0;
     boolean isMobile, isEmail;
-
+    static int timecount=60;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +59,37 @@ public class FindPasswordPh_Em extends AppCompatActivity {
         isLogin = intent.getStringExtra("islogin");
         Toast.makeText(getApplicationContext(), "action" + action + isLogin, Toast.LENGTH_LONG).show();
 
+        btnNext = (Button) findViewById(R.id.btn_next);
         edtPhoneNum = (EditText) findViewById(R.id.edt_phoneNum);
         edtYanzhengma = (EditText) findViewById(R.id.edt_yanzhengma);
-        tvGetYanzhengma = (TextView) findViewById(R.id.tv_getYanzhengma);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        tvGetYanzhengma = (Button) findViewById(R.id.tv_getYanzhengma);
+        tvGetYanzhengma.setEnabled(false);
+        btnNext.setEnabled(false);
+        edtPhoneNum.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {tvGetYanzhengma.setEnabled(true);}
+        });
+        edtYanzhengma.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {btnNext.setEnabled(true);}
+        });
         //获取验证码
         tvGetYanzhengma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Timer time=new Timer();
+                tvGetYanzhengma.setEnabled(false);
+                TimerTask task=new TimerTask() {
+                    @Override
+                    public void run() {
+                        Message msg = Message.obtain();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
+                    }
+                };
+                time.schedule(task, 60000);
                 ph_emNum = edtPhoneNum.getText().toString();
                 Toast.makeText(getApplicationContext(), "ph_em" + ph_emNum, Toast.LENGTH_LONG).show();
                 if (!ph_emNum.equals("")) {
@@ -71,38 +97,33 @@ public class FindPasswordPh_Em extends AppCompatActivity {
                     isMobile = Zhengzebiaoda.isMobilNO(ph_emNum);
                     isEmail = Zhengzebiaoda.isEmailNO(ph_emNum);
                     Toast.makeText(getApplicationContext(), "ph" + isMobile + ",em" + isEmail, Toast.LENGTH_LONG).show();
-                    boolean netState = getNetworkState.isNetworkConnected(getApplicationContext());
-                    if (netState) {
-                        if (isMobile) {
-                            Toast.makeText(getApplicationContext(), "正确的手机号", Toast.LENGTH_LONG).show();
-                            action_type = PHONE;
-                            //初始化手机发送验证码SDK
-                            SMSSDK.initSDK(FindPasswordPh_Em.this, "fd884658fad9", "a3487e5c9dbe8544cb9d863cd5636f6f");
-                            EventHandler eh = new EventHandler() {
-                                @Override
-                                public void afterEvent(int event, int result, Object data) {
-                                    Message msg = new Message();
-                                    msg.arg1 = event;
-                                    msg.arg2 = result;
-                                    msg.obj = data;
-                                    handler.sendMessage(msg);
-                                }
-                            };
-                            SMSSDK.registerEventHandler(eh);
-                            ready = true;
-                            SMSSDK.getVerificationCode("86", edtPhoneNum.getText().toString());
-                            Toast.makeText(getApplicationContext(), "手机验证码获取成功", Toast.LENGTH_LONG).show();
-                        } else if (isEmail) {
-                            Toast.makeText(getApplicationContext(), "正确的邮箱号", Toast.LENGTH_LONG).show();
-                            action_type = EMAIL;
-                            //开启新的线程
-                            sendEmail(ph_emNum);
-                            Toast.makeText(getApplicationContext(), "邮箱验证码获取成功", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "请输入正确的邮箱号或手机号", Toast.LENGTH_LONG).show();
-                        }
+                    if (isMobile) {
+                        Toast.makeText(getApplicationContext(), "正确的手机号", Toast.LENGTH_LONG).show();
+                        action_type = PHONE;
+                        //初始化手机发送验证码SDK
+                        SMSSDK.initSDK(FindPasswordPh_Em.this, "fd884658fad9", "a3487e5c9dbe8544cb9d863cd5636f6f");
+                        EventHandler eh = new EventHandler() {
+                            @Override
+                            public void afterEvent(int event, int result, Object data) {
+                                Message msg = new Message();
+                                msg.arg1 = event;
+                                msg.arg2 = result;
+                                msg.obj = data;
+                                handler.sendMessage(msg);
+                            }
+                        };
+                        SMSSDK.registerEventHandler(eh);
+                        ready = true;
+                        SMSSDK.getVerificationCode("86", edtPhoneNum.getText().toString());
+                        Toast.makeText(getApplicationContext(), "手机验证码获取成功", Toast.LENGTH_LONG).show();
+                    } else if (isEmail) {
+                        Toast.makeText(getApplicationContext(), "正确的邮箱号", Toast.LENGTH_LONG).show();
+                        action_type = EMAIL;
+                        //开启新的线程
+                        sendEmail(ph_emNum);
+                        Toast.makeText(getApplicationContext(), "邮箱验证码获取成功", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "没有网络", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "请输入正确的邮箱号或手机号", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(FindPasswordPh_Em.this, "电话或者邮箱不能为空", Toast.LENGTH_SHORT).show();
@@ -124,7 +145,7 @@ public class FindPasswordPh_Em extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "邮箱验证码提交成功yanzhengVerify" + yanzhengVerify, Toast.LENGTH_LONG).show();
                         if (Integer.parseInt(yanzhengma) == yanzhengVerify) {//得到的验证码和发送的验证码相同
                             Intent intent = new Intent(FindPasswordPh_Em.this, SetNewPsw.class);
-                            intent.putExtra("islogin", isLogin);
+                            intent.putExtra("islogin",isLogin);
                             intent.putExtra("ph_emNum", ph_emNum);
                             if (action.equals(REGISTER)) {
                                 intent.putExtra("action", REGISTER);
@@ -147,10 +168,9 @@ public class FindPasswordPh_Em extends AppCompatActivity {
     private void init() {
         edtPhoneNum = (EditText) findViewById(R.id.edt_phoneNum);
         edtYanzhengma = (EditText) findViewById(R.id.edt_yanzhengma);
-        tvGetYanzhengma = (TextView) findViewById(R.id.tv_getYanzhengma);
+        tvGetYanzhengma = (Button) findViewById(R.id.tv_getYanzhengma);
         btnNext = (Button) findViewById(R.id.btn_next);
     }
-
     /**
      * 处理手机信息
      */
@@ -161,6 +181,8 @@ public class FindPasswordPh_Em extends AppCompatActivity {
             super.handleMessage(msg);
             int event = msg.arg1;
             int result = msg.arg2;
+            int set=msg.what;
+
             Object data = msg.obj;
             Log.e("event", "event=" + event);
             if (result == SMSSDK.RESULT_COMPLETE) {
@@ -176,14 +198,17 @@ public class FindPasswordPh_Em extends AppCompatActivity {
                     } else if (action.equals(FINDPASSWORD)) {
                         intent.putExtra("action", FINDPASSWORD);
                     }
-                    intent.putExtra("islogin", isLogin);
+                    intent.putExtra("islogin",isLogin);
                     startActivity(intent);
                     finish();
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                ((Throwable) data).printStackTrace();
+            }else if(set==1){
+                tvGetYanzhengma.setEnabled(true);
+            }
+            else {
+                // ((Throwable) data).printStackTrace();
                 Toast.makeText(getApplicationContext(), "验证码错误", Toast.LENGTH_SHORT).show();
             }
         }

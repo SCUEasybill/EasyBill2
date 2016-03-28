@@ -15,12 +15,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.scu.easybill.login_db.Login;
 import com.scu.easybill.login_db.SelectPicPopupWindow;
 import com.scu.easybill.login_db.UserInfo;
@@ -28,6 +33,7 @@ import com.scu.easybill.login_db.UserUtils;
 import com.scu.easybill.login_db.Users;
 import com.scu.easybill.utils.FileUtil;
 import com.scu.easybill.utils.MyConnector;
+import com.scu.easybill.utils.getNetworkState;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,9 +42,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import custom.view.BaseActivity;
 import custom.view.RoundImageView;
+import scu.function.ExportExcel;
+import scu.function.ImportExecl;
 
 import static com.scu.easybill.utils.ConstantsUtil.NOLOGIN;
 import static com.scu.easybill.utils.ConstantsUtil.SERVER_ADDRESS;
@@ -65,6 +74,11 @@ public class SettingActivity extends BaseActivity {
     String isLogin = null;
     public static SettingActivity settingActivity;
     boolean netState = false;//是否联网
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     public static void activityStart(Context context) {
         Intent intent = new Intent(context, SettingActivity.class);
@@ -78,9 +92,12 @@ public class SettingActivity extends BaseActivity {
         settingActivity = this;
         mContext = this.getApplicationContext();
         getAppState();
-        netState = com.scu.easybill.utils.getNetworkState.isNetworkConnected(getApplicationContext());
+        netState = getNetworkState.isNetworkConnected(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final LinearLayout ImportDate = (LinearLayout) findViewById(R.id.ImportDate);
+        LinearLayout ExportDate = (LinearLayout) findViewById(R.id.ExportDate);
 
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -89,7 +106,38 @@ public class SettingActivity extends BaseActivity {
                 SettingActivity.this.finish();
             }
         });
-        //头像操作
+
+        //测试数据
+        final String as[] = {"流波1", "刘波2", "老板3", "猎豹4", "了吧5", "老班6", "类别7", "里吧8", "来吧9", "列表10", "聊吧11", "六百12"};
+        final ArrayList<String[]> strings = new ArrayList<String[]>();
+        for (int i = 0; i < 100; i++) {
+            String a[] = new String[12];
+            for (int j = 0; j < 12; j++) {
+                a[j] = "a" + " " + i + " " + j + " " + (char) ('a' + i);
+            }
+            strings.add(a);
+        }
+
+        ImportDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                (new ExportExcel()).ExportDate(strings, as, "EasyBill");
+                Toast.makeText(ImportDate.getContext(), "导出成功", Toast.LENGTH_LONG);
+            }
+        });
+
+        ExportDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(SettingActivity.this, ImportExecl.class);
+                startActivity(intent);
+                Log.e("liubo", "ExportDate successed!!!!");
+            }
+        });
+
+
+//头像操作
         riv_head_portrait = (RoundImageView) findViewById(R.id.setting_activity_head_portrait);
         riv_head_portrait.setImageResource(R.drawable.header);
         Drawable drawable = UserUtils.updatePortrait();//        更新头像信息
@@ -110,10 +158,13 @@ public class SettingActivity extends BaseActivity {
         tvUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(mContext, UserInfo.class);
-                    startActivity(intent);
+                Intent intent = new Intent(mContext, UserInfo.class);
+                startActivity(intent);
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void getAppState() {
@@ -230,7 +281,7 @@ public class SettingActivity extends BaseActivity {
                     File file = new File(urlpath);
                     FileInputStream fStream = new FileInputStream(file);
                     String[] fileEnd = file.getName().split("\\.");
-                    String sendMsg = "<#UPLOADPORTRAIT#>" + user.getUser_id() +BUFF + fileEnd[fileEnd.length - 1].toString();
+                    String sendMsg = "<#UPLOADPORTRAIT#>" + user.getUser_id() + BUFF + fileEnd[fileEnd.length - 1].toString();
                     mConnection.dout.writeUTF(sendMsg);
                     //每次写入102400
                     int bufferSize = 1024 * 70;
@@ -322,5 +373,45 @@ public class SettingActivity extends BaseActivity {
             mConnection.sayBye();
         }
         mConnection = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Setting Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://xyz.anmai.easybill/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Setting Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://xyz.anmai.easybill/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }

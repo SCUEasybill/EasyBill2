@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="xyz.anmai.easybill.AddCategory">
+
+    <TextView
+        android:paddingBottom="20dp"
+        android:textColor="@color/red"
+        android:textSize="23sp"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:text="请填写标签信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="18sp"
+            android:layout_weight="2"
+            android:text="标签属性"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/cate_spinner_add_attribute"
+            android:prompt="@string/cate_spinner_attribute_prompt"
+            android:spinnerMode="dialog"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
+    <View style="@style/straight_line" />
+    <LinearLayout
+        android:gravity="center"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="18sp"
+            android:layout_weight="2"
+            android:text="图标"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/cate_spinner_add_ico"
+            android:prompt="@string/cate_spinner_ico_prompt"
+            android:spinnerMode="dialog"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
+    <View style="@style/straight_line" />
+    <LinearLayout
+        android:gravity="center"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="18sp"
+            android:text="标签名称"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/cate_add_name"
+            android:layout_weight="1"
+            android:hint="2-4个汉字"
+            android:textAlignment="center"
+            android:textColorHint="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View style="@style/straight_line" />
+    <Button
+        android:id="@+id/add_label_commit_button"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:text="提交"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

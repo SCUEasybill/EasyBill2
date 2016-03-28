@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,8 +26,6 @@ import com.iflytek.cloud.RecognizerListener;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
-import com.iflytek.cloud.ui.RecognizerDialog;
-import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.sunflower.FlowerCollector;
 import com.scu.easybill.iflytek.speech.util.JsonParser;
 import com.scu.easybill.login_db.Login;
@@ -40,7 +36,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
 
 /**
  * Created by anquan on 2016/3/1.
@@ -55,51 +50,27 @@ public class MainFragment extends Fragment {
 
     // 语音听写对象
     private SpeechRecognizer mIat;
-    // 语音听写UI
-    private RecognizerDialog mIatDialog;
+    private Toast mToast;
+    private Context mContext;
     // 用HashMap存储听写结果
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
-
-    private EditText mResultText;
-    private Toast mToast;
-    private SharedPreferences mSharedPreferences;
-    private Context mContext;
     int ret = 0; // 函数调用返回值
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_main, null);
+        View view = inflater.inflate(R.layout.fragment_main, null);
         mContext = getActivity().getApplicationContext();
         // 初始化识别无UI识别对象
         // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
         mIat = SpeechRecognizer.createRecognizer(mContext, mInitListener);
-        // 初始化听写Dialog，如果只使用有UI听写功能，无需创建SpeechRecognizer
-        // 使用UI听写功能，请根据sdk文件目录下的notice.txt,放置布局文件和图片资源
-        mIatDialog = new RecognizerDialog(MainActivity.context, mInitListener);
-        mSharedPreferences = getActivity().getSharedPreferences("com.scu.easybill.mainfragment", Context.MODE_PRIVATE);
         mToast = Toast.makeText(mContext, "", Toast.LENGTH_SHORT);
 
-        // 初始化听写Dialog，如果只使用有UI听写功能，无需创建SpeechRecognizer
-        // 使用UI听写功能，请根据sdk文件目录下的notice.txt,放置布局文件和图片资源
-        mIatDialog = new RecognizerDialog(getActivity().getApplicationContext(), mInitListener);
         //点击语音按钮
         btnVoice = (Button) view.findViewById(R.id.voice);
         btnVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(), "click voice", Toast.LENGTH_LONG).show();
-                boolean isShowDialog = mSharedPreferences.getBoolean(
-                        getString(R.string.pref_key_iat_show), true);
-//                if (!isShowDialog) {
-//                    //显示听写对话框===error:对话框显示失败
-//                    mIatDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-//                    mIatDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
-//                    mIatDialog.setListener(mRecognizerDialogListener);
-//                    mIatDialog.show();
-//                    showTip(getString(R.string.text_begin));
-//                } else {
-//				 不显示听写对话框
+
                 pd = onCreateDialog(savedInstanceState);
                 pd.show();
                 ret = mIat.startListening(mRecognizerListener);
@@ -108,16 +79,15 @@ public class MainFragment extends Fragment {
                 } else {
                     showTip(getString(R.string.text_begin));
                 }
-//                }
             }
         });
         //饼状图
         mChart = (PieChart) view.findViewById(R.id.spread_pie_chart);
         PieData mPieData = getPieData(4, 100);
         showChart(mChart, mPieData);
+
         return view;
     }
-
     /**
      * 初始化监听器。
      */
@@ -130,50 +100,6 @@ public class MainFragment extends Fragment {
             }
         }
     };
-    /**
-     * 语音开始
-     * 听写UI监听器
-     */
-    private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
-        public void onResult(RecognizerResult results, boolean isLast) {
-            printResult(results);
-        }
-
-        /**
-         * 识别回调错误.
-         */
-        public void onError(SpeechError error) {
-            showTip(error.getPlainDescription(true));
-        }
-    };
-
-    private String printResult(RecognizerResult results) {
-        String text = JsonParser.parseIatResult(results.getResultString());
-
-        String sn = null;
-        // 读取json结果中的sn字段
-        try {
-            JSONObject resultJson = new JSONObject(results.getResultString());
-            sn = resultJson.optString("sn");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mIatResults.put(sn, text);
-
-        StringBuffer resultBuffer = new StringBuffer();
-        for (String key : mIatResults.keySet()) {
-            resultBuffer.append(mIatResults.get(key));
-        }
-        showTip(resultBuffer.toString());
-        return resultBuffer.toString();
-
-    }
-
-    private void showTip(final String str) {
-        mToast.setText(str);
-        mToast.show();
-    }
 
     /**
      * 听写监听器。
@@ -229,6 +155,33 @@ public class MainFragment extends Fragment {
         }
     };
 
+    private String printResult(RecognizerResult results) {
+        String text = JsonParser.parseIatResult(results.getResultString());
+
+        String sn = null;
+        // 读取json结果中的sn字段
+        try {
+            JSONObject resultJson = new JSONObject(results.getResultString());
+            sn = resultJson.optString("sn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mIatResults.put(sn, text);
+
+        StringBuffer resultBuffer = new StringBuffer();
+        for (String key : mIatResults.keySet()) {
+            resultBuffer.append(mIatResults.get(key));
+        }
+
+        return resultBuffer.toString();
+    }
+
+    private void showTip(final String str) {
+        mToast.setText(str);
+        mToast.show();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -264,10 +217,8 @@ public class MainFragment extends Fragment {
         dialog.setCancelable(true);
         return dialog;
     }
-
     /**
-     * author anmai
-     *
+     *author anmai
      * @param count 分成几部分
      * @param range
      */
@@ -322,7 +273,6 @@ public class MainFragment extends Fragment {
 
     /**
      * author anmai
-     *
      * @param pieChart
      * @param pieData
      */
@@ -379,5 +329,4 @@ public class MainFragment extends Fragment {
         pieChart.animateXY(1000, 1000);  //设置动画
         // mChart.spin(2000, 0, 360);
     }
-
 }

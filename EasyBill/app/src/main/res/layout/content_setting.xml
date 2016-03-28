@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/window_bg"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/window_bg"
     tools:context="xyz.anmai.easybill.SettingActivity"
     tools:showIn="@layout/activity_setting">
 
@@ -16,12 +16,13 @@
     <!-- border_outside_color 外部圆圈的颜色 --> 
         <!-- border_inside_color 内部部圆圈的颜色 --> 
         <!-- border_thickness 外圆和内圆的宽度 --> 
+
     <custom.view.RoundImageView
         android:id="@+id/setting_activity_head_portrait"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/cate_gift"
         app:border_inside_color="#bc0978"
         app:border_outside_color="#ba3456"
@@ -30,13 +31,13 @@
     <View
         android:id="@+id/straight_line_1"
         style="@style/straight_line"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/setting_activity_head_portrait"/>
+        android:layout_below="@+id/setting_activity_head_portrait"
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
-        android:layout_below="@id/straight_line_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/straight_line_1"
         android:orientation="vertical">
 
         <ScrollView
@@ -58,13 +59,13 @@
                     <LinearLayout style="@style/lebal_bg_single_layout">
 
                         <TextView
+                            android:id="@+id/tv_userInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12.0dip"
                             android:layout_weight="1.0"
                             android:text="个人信息"
                             android:textColor="#ff333333"
-                            android:id="@+id/tv_userInfo"
                             android:textSize="16.0dip" />
 
                         <ImageView
@@ -79,7 +80,9 @@
                 <!--  第二排设置 -->
                 <LinearLayout style="@style/lebal_bg_layout">
                     <!--  导出数据 	-->
-                    <LinearLayout style="@style/lebal_bg_top_layout">
+                    <LinearLayout
+                        android:id="@+id/ImportDate"
+                        style="@style/lebal_bg_top_layout">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -103,7 +106,9 @@
                         android:background="@drawable/lebal_shape_line" />
 
                     <!-- 自动同步 -->
-                    <LinearLayout style="@style/lebal_bg_mid_layout">
+                    <LinearLayout
+                        android:id="@+id/ExportDate"
+                        style="@style/lebal_bg_mid_layout">
 
                         <TextView
                             android:layout_width="wrap_content"

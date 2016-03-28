@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsFragment">
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_height="50dp"
+        android:layout_width="match_parent">
+        <Button
+            android:id="@+id/title_btn_left"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:background="#F9F9F9"/>
+        <TextView
+            android:id="@+id/title_txt"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/title_btn_right"
+            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#F9F9F9"/>
+
+        <LinearLayout
+            style="@style/title"
+            android:id="@+id/select">
+            <Button
+                android:button="@null"
+                android:id="@+id/graph_left"
+                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@drawable/constact_font"
+                android:background="@drawable/constact_group"
+                android:text="饼状图"/>
+            <Button
+                android:id="@+id/graph_right"
+                android:button="@null"
+                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/constact_font"
+                android:background="@drawable/constact_all"
+                android:text="折线图"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:id="@+id/start_time"
+            android:text="2016年3月16日  到"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/end_time"
+            android:text="   2016年3月16日"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/graph_one"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_below="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/graph_two"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_below="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+
+
+</RelativeLayout>

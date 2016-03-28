@@ -1,12 +1,12 @@
 package com.scu.easybill.login_db;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,7 +31,7 @@ import static com.scu.easybill.utils.FileUtil.saveFile;
 /**
  * Created by guyu on 2016/1/29.
  */
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     MyConnector mc;
     Button btn_login, btn_cancle;
     EditText etUid, etPwd;
@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity {
         btn_cancle = (Button) findViewById(R.id.btn_cancel);
         tv_register = (TextView) findViewById(R.id.tv_register);
         tv_findPswPh = (TextView) findViewById(R.id.tv_findPswPh);
-        tv_registerEm = (TextView) findViewById(R.id.tv_registerEm);
+ //       tv_registerEm = (TextView) findViewById(R.id.tv_registerEm);
     }
 
     /**
